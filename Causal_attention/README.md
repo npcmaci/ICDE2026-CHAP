@@ -8,7 +8,7 @@ Finally, the hierarchy-aware predictor aggregates the latent representations of 
 
 ## Framework
 
-![2 (2)](.\README.assets\2 (2).png)
+![Framework](./README.assets/2%20(2).png)
 
 ## Project Structure
 
