@@ -137,24 +137,32 @@ Before running experiments, please prepare the datasets as follows:
 ## Training models
 
 * **our model：**
+  * cd tests
   * python test_causal_attention_msk_model.py --dataset creditcard --num_heads 4 --num_layers 2 --gpu_id 0 --d_model 32 --learning_rate 0.001
   * Note: The main experiments also provide efficiency results (training time and inference time) which are automatically logged during execution.
 * **baselines：**
-  * FT-Transformer
+  * **FT-Transformer** (implementation from original repository)
+    * cd baseline
     * python test_ft_transformer_base_line.py --dataset creditcard --d_token 64 --n_heads 8 --n_blocks 2 --lr 0.001
-  * Tab-Transformer
+  * **Tab-Transformer** (implementation from original repository)
+    * cd baseline
     * python test_tab_transformer_base_line.py --dataset creditcard --d_token 64 --n_heads 8 --n_blocks 6 --lr 0.001
-  * SAINT
+  * **SAINT** (implementation from original repository)
+    * cd baseline/saint
     * python train_with_custom_data.py --dataset creditcard --embedding_size 64 --transformer_depth 4 --attention_heads 4 --lr 0.0001 
-  * Castle
+  * **CASTLE** (implementation from original repository)
+    * cd baseline/castle
     * python main_cf.py   --csv creditcard.csv  --n_folds 5   --reg_lambda 1.0   --reg_beta 5.0  --extension creditcard
     * python main.py   --csv diamonds.csv  --n_folds 5   --reg_lambda 1.0   --reg_beta 5.0  --extension diamonds
-  * LogCause
+  * **LogCause**
+    * cd baseline
     * python test_linear_baseline.py --dataset creditcard --learning_rate 0.0001
-  * AutoML
+  * **AutoML**
+    * cd baseline/automl
     * python test_automl_classification.py --dataset creditcard --time_limit 480
     * python test_automl_regression.py --dataset diamonds --time_limit 480
-  * XGBoost
+  * **XGBoost**
+    * cd baseline/xgboost
     * python xgboost.py --dataset Diamonds --n_folds 5 --random_state 42 --test_size 0.2
 
 ## Running Experiments
@@ -193,34 +201,34 @@ Experiments evaluating different design choices in CHAP:
 * **Softmax mask**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model_inner_softmax_mask_design
 
-* **Parents predictor**
+* **Flattening**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model_parents_predictor_design
 
-* **Normal predictor**
+* **Mean Pooling**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model
 
-* **No mask train**
+* **Parallel Reconstruction**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model_nomsk_design
 
 ## Ablation Study
 
 Experiments removing individual components to evaluate their contributions:
 
-* **Wo pred reg**
+* **w/o pred reg**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_prediction_reg
 
-* **Wo DAG**
+* **w/o DAG loss**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_dag_loss
 
-* **Wo sparse loss**
+* **w/o sparse loss**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_sparse_loss
 
-* **Wo reconstruction**
+* **w/o reconstruction loss**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_reconstruction_loss
 
-* **Wo all reg loss**
+* **w/o all reg loss**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_three_loss
 
-* **Wo mask**
+* **w/o causal mask**
   * python tests/test_causal_attention_msk_model.py --prefix creditcard --dataset creditcard --num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model 32 --learning_rate 0.0001 --model_source models.causal_attention_msk_model_wo_mask_attention --train_source utils.train_msk_utils_wo_three_loss
 

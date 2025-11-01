@@ -285,18 +285,18 @@ for dataset in "${design_datasets[@]}"; do
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $design_params --model_source models.causal_attention_msk_model_inner_softmax_mask_design
     echo ""
     
-    # Parents predictor design
-    echo "Running Parents Predictor design on $dataset..."
+    # Flattening design
+    echo "Running Flattening design on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $design_params --model_source models.causal_attention_msk_model_parents_predictor_design
     echo ""
     
-    # Normal predictor design (main model)
-    echo "Running Normal Predictor design on $dataset..."
+    # Mean Pooling design
+    echo "Running Mean Pooling design on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $design_params --model_source models.causal_attention_msk_model
     echo ""
     
-    # No mask train design
-    echo "Running No Mask Train design on $dataset..."
+    # Parallel Reconstruction design
+    echo "Running Parallel Reconstruction design on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $design_params --model_source models.causal_attention_msk_model_nomsk_design
     echo ""
 done
@@ -318,33 +318,33 @@ ablation_params="--num_heads 4 --num_layers 1 --gpu_id 0 --patience 50 --d_model
 
 ablation_datasets=("adult" "diamonds")
 for dataset in "${ablation_datasets[@]}"; do
-    # Without prediction regularization
-    echo "Running without prediction regularization on $dataset..."
+    # w/o pred reg
+    echo "Running w/o pred reg on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_prediction_reg
     echo ""
     
-    # Without DAG loss
-    echo "Running without DAG loss on $dataset..."
+    # w/o DAG loss
+    echo "Running w/o DAG loss on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_dag_loss
     echo ""
     
-    # Without sparse loss
-    echo "Running without sparse loss on $dataset..."
+    # w/o sparse loss
+    echo "Running w/o sparse loss on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_sparse_loss
     echo ""
     
-    # Without reconstruction loss
-    echo "Running without reconstruction loss on $dataset..."
+    # w/o reconstruction loss
+    echo "Running w/o reconstruction loss on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_reconstruction_loss
     echo ""
     
-    # Without all regularization losses
-    echo "Running without all regularization losses on $dataset..."
+    # w/o all reg loss
+    echo "Running w/o all reg loss on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model --train_source utils.train_msk_utils_wo_three_loss
     echo ""
     
-    # Without mask attention
-    echo "Running without mask attention on $dataset..."
+    # w/o causal mask
+    echo "Running w/o causal mask on $dataset..."
     python test_causal_attention_msk_model.py --prefix $dataset --dataset $dataset $ablation_params --model_source models.causal_attention_msk_model_wo_mask_attention --train_source utils.train_msk_utils_wo_three_loss
     echo ""
 done

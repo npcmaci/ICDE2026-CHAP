@@ -1,3 +1,10 @@
+"""
+Causal Graph Learning Evaluation Script
+
+This script evaluates causal graph learning performance on synthetic numerical DAG datasets.
+It supports both CHAP and CASTLE models for causal discovery tasks.
+"""
+
 import torch
 import sys
 import os
@@ -13,6 +20,11 @@ import numpy as np
 import argparse
 import subprocess
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, roc_auc_score
+
+
+# ====================
+# Evaluation Metrics
+# ====================
 
 def compute_causal_metrics(pred_adj, true_adj, threshold=0.5):
     """Compute causal graph evaluation metrics."""
@@ -46,6 +58,11 @@ def compute_causal_metrics(pred_adj, true_adj, threshold=0.5):
         'tn': tn
     }
 
+
+# ====================
+# Causal Graph Extraction
+# ====================
+
 def extract_causal_graph(model):
     """Extract binary causal graph from trained model."""
     causal_mask = model.get_causal_mask()
@@ -55,6 +72,11 @@ def extract_causal_graph(model):
     causal_graph = (causal_mask_transposed > THRESHOLD_CAUSAL_ATTENTION).astype(int)
     
     return causal_graph
+
+
+# ====================
+# Results Saving
+# ====================
 
 def save_causal_graph_results(pred_adj, true_adj, metrics, save_dir, prefix=""):
     """Persist predicted/true graphs, metrics, and a comparison figure."""
@@ -113,6 +135,11 @@ def save_causal_graph_results(pred_adj, true_adj, metrics, save_dir, prefix=""):
     print(f"  true: {true_path}")
     print(f"  metrics: {metrics_path}")
     print(f"  figure: {viz_path}")
+
+
+# ====================
+# Main Training Function
+# ====================
 
 def test_causal_graph_learning(prefix="", dataset="numerical_5vars", num_heads=4, num_layers=1, gpu_id=-1,
                               learning_rate=1e-4, weight_decay=1e-5, num_epochs=100, patience=10,
@@ -269,6 +296,11 @@ def test_causal_graph_learning(prefix="", dataset="numerical_5vars", num_heads=4
         'metrics': metrics,
         'model': trained_model
     }
+
+
+# ====================
+# Command Line Interface
+# ====================
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Causal Graph Learning Test')
