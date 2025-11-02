@@ -141,16 +141,16 @@ Before running experiments, please prepare the datasets as follows:
   * python test_causal_attention_msk_model.py --dataset creditcard --num_heads 4 --num_layers 2 --gpu_id 0 --d_model 32 --learning_rate 0.001
   * Note: The main experiments also provide efficiency results (training time and inference time) which are automatically logged during execution.
 * **baselines：**
-  * **FT-Transformer** (implementation from original repository)
+  * **FT-Transformer**
     * cd baseline
     * python test_ft_transformer_base_line.py --dataset creditcard --d_token 64 --n_heads 8 --n_blocks 2 --lr 0.001
-  * **Tab-Transformer** (implementation from original repository)
+  * **Tab-Transformer**
     * cd baseline
     * python test_tab_transformer_base_line.py --dataset creditcard --d_token 64 --n_heads 8 --n_blocks 6 --lr 0.001
-  * **SAINT** (implementation from original repository)
+  * **SAINT**
     * cd baseline/saint
     * python train_with_custom_data.py --dataset creditcard --embedding_size 64 --transformer_depth 4 --attention_heads 4 --lr 0.0001 
-  * **CASTLE** (implementation from original repository)
+  * **CASTLE**
     * cd baseline/castle
     * python main_cf.py   --csv creditcard.csv  --n_folds 5   --reg_lambda 1.0   --reg_beta 5.0  --extension creditcard
     * python main.py   --csv diamonds.csv  --n_folds 5   --reg_lambda 1.0   --reg_beta 5.0  --extension diamonds
